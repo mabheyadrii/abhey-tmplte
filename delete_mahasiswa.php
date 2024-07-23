@@ -7,16 +7,18 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-if (isset($_GET['nim'])) {
-    $nim = $_GET['nim'];
+$nim = $_GET['nim'];
 
-    $sql = "DELETE FROM tbl_mahasiswa WHERE nim='$nim'";
-    if ($conn->query($sql) === TRUE) {
-        echo "<h3>Data mahasiswa berhasil dihapus</h3>";
-    } else {
-        echo "Error: " . $conn->error;
-    }
+$sql_delete_organisasi = "DELETE FROM tbl_organisasi WHERE nim = '$nim'";
+$conn->query($sql_delete_organisasi);
+
+$sql_delete_mahasiswa = "DELETE FROM tbl_mahasiswa WHERE nim = '$nim'";
+if ($conn->query($sql_delete_mahasiswa) === TRUE) {
+    echo "Data mahasiswa berhasil dihapus";
 } else {
-    echo "NIM tidak ditemukan di URL.";
+    echo "Error: " . $conn->error;
 }
+
+header("Location: index.php");
+exit;
 ?>
